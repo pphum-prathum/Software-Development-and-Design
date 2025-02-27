@@ -32,14 +32,22 @@ jobs:
       - name: Debug Build Output
         run: ls -R build/  # Show compiled files
 
+      # 📌 NEW: Download JUnit Platform Console Standalone
+      - name: Download JUnit Console Standalone
+        run: |
+          curl -o junit-platform-console-standalone.jar \
+          https://repo1.maven.org/maven2/org/junit/platform/junit-platform-console-standalone/1.9.3/junit-platform-console-standalone-1.9.3.jar
+
+      # 📌 NEW: Run Tests with JUnit
       - name: Run Tests with Coverage
         run: |
           mkdir -p build/test-results
-          java -jar junit-platform-console-standalone-1.9.3.jar \
+          java -jar junit-platform-console-standalone.jar \
             --class-path build/classes \
             --scan-class-path \
             --reports-dir build/test-results
 
+      # 📌 Run SonarCloud Scan
       - name: Run SonarCloud Scan
         uses: SonarSource/sonarqube-scan-action@v4
         env:
