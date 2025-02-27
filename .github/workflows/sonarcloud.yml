@@ -27,8 +27,8 @@ jobs:
       - name: Install Gradle
         run: sudo apt update && sudo apt install -y gradle
 
-      - name: Build and Test with Gradle
-        run: gradle build test  # No "./gradlew", use "gradle" instead
+      - name: Build Java Project
+        run: gradle build
 
       - name: Run SonarCloud Scan
         uses: SonarSource/sonarqube-scan-action@v4
