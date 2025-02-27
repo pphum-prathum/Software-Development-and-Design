@@ -32,6 +32,14 @@ jobs:
       - name: Debug Build Output
         run: ls -R build/  # Show compiled files
 
+      - name: Run Tests with Coverage
+        run: |
+          mkdir -p build/test-results
+          java -jar junit-platform-console-standalone-1.9.3.jar \
+            --class-path build/classes \
+            --scan-class-path \
+            --reports-dir build/test-results
+
       - name: Run SonarCloud Scan
         uses: SonarSource/sonarqube-scan-action@v4
         env:
@@ -42,4 +50,5 @@ jobs:
             -Dsonar.organization=pphum-prathum
             -Dsonar.host.url=https://sonarcloud.io
             -Dsonar.sources=HolidayTravelVehicles
-            -Dsonar.java.binaries=build/classes  # Use manually compiled output
+            -Dsonar.java.binaries=build/classes
+            -Dsonar.coverage.jacoco.xmlReportPaths=build/test-results/jacocoTestReport.xml
